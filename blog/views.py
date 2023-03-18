@@ -9,6 +9,9 @@ from django.views.decorators.http import require_POST
 from .models import Post
 from .forms import EmailPostForm, CommentForm
 from taggit.models import Tag
+from django.contrib.sites.models import Site
+from django.contrib.sites.shortcuts import get_current_site
+from django.template import loader
 
 
 def post_list(request, tag_slug=None):
