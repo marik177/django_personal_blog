@@ -16,6 +16,7 @@
             <h4>
                 <a href="{{ post.get_absolute_url }}">
                     {{ post.title }}</a>
+            {{ post.rank }}
             </h4>
             {{ post.body|markdown|truncatewords_html:12 }}
         {% empty %}

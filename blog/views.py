@@ -45,7 +45,7 @@ def post_detail(request, year, month, day, post):
     similar_posts = Post.published.filter(tags__in=post_tags_id). \
         exclude(id=post.id)
     similar_posts = similar_posts.annotate(same_tags=Count('tags')) \
-        .order_by('-same_tags', '-publish')[0:4]
+                        .order_by('-same_tags', '-publish')[0:4]
     form = CommentForm()
     comments = post.comments.filter(active=True)
     return render(request,
@@ -113,13 +113,14 @@ def post_search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
-            search_vector = SearchVector('title', 'body', config='russian')
-            search_query = SearchQuery(query, config='russian')
-            results = Post.objects.\
+            search_vector = SearchVector('title', weight='A') + \
+                            SearchVector('body', weight='B')
+            search_query = SearchQuery(query)
+            print(search_query)
+            results = Post.objects. \
                 annotate(search=search_vector,
-                         rank=SearchRank(search_vector, search_query)).\
-                filter(search=search_query).order_by('-rank')
+                         rank=SearchRank(search_vector, search_query)). \
+                filter(rank__gte=0.3).order_by('-rank')
 
     return render(request, 'blog/post/search.html',
                   {'form': form, 'query': query, 'results': results})
-
