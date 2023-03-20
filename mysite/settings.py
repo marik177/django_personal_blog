@@ -81,6 +81,8 @@ DATABASES = {
         "NAME": "blog_melle_django",
         "USER": "marik",
         "PASSWORD": "marik_password",
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
 

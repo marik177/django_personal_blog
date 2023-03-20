@@ -10,7 +10,31 @@
   - Create a sitemap and a RSS feed for your blog
   - Implement a full-text search engine using PostgreSQL
 
-## To start the project:
+## Start project using Docker
+1. The first thing to do is to clone the repository:
+    ```
+    git clone https://github.com/marik177/django_personal_blog.git
+   ```
+2. Using the Dockerfile and docker-compose.yaml run the project:
+   ```
+   docker-compose up --build
+   ```
+3. In new terminal window run command:
+   ````
+   docker-compose exec web sh
+   ````
+4. Run the migrations in the container, create a superuser, and populate the database with initial data:
+   ````
+   python manage.py migrate
+   
+   python manage.py createsuperuser
+   
+   python3 manage.py loaddata mysite_data.json
+   ````
+
+
+
+## Start the project without Docker:
 1. The first thing to do is to clone the repository:
     ```
     git clone https://github.com/marik177/django_personal_blog.git
